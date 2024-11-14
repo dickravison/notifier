@@ -12,13 +12,14 @@ USER_PARAM = '/notifier/user'
 TOKEN_PARAM = '/notifier/token'
 
 def notify(event, context):
+    #Retrieve the API credentials from AWS Parameter Store
+    headers = {'X-Aws-Parameters-Secrets-Token':AWS_SESSION_TOKEN}
+    response = requests.get(SSM_URL + USER_PARAM, headers = headers)
+    user = json.loads(response.text)
+    response = requests.get(SSM_URL + TOKEN_PARAM, headers = headers)
+    token = json.loads(response.text)
+    #Loop over each event and publish a new message to the SNS topic
     for e in event['Records']:
-        headers = {'X-Aws-Parameters-Secrets-Token':AWS_SESSION_TOKEN}
-        response = requests.get(SSM_URL + USER_PARAM, headers = headers)
-        user = json.loads(response.text)
-        response = requests.get(SSM_URL + TOKEN_PARAM, headers = headers)
-        token = json.loads(response.text)
-
         message = e['Sns']['Message']
         subject = e['Sns']['Subject']
         payload = {"title": subject, "message": message, "user": user['Parameter']['Value'], "token": token['Parameter']['Value'] , "html": "1"}
