@@ -12,3 +12,12 @@ variable "runtime" {
   type        = string
   description = "The runtime for the Lambda function"
 }
+
+variable "pushover_parameters" {
+  type        = map(any)
+  description = "The parameters to store in Parameter Store"
+  default = {
+    user  = {}
+    token = {}
+  }
+}

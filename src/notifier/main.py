@@ -3,6 +3,7 @@ import os
 import requests
 
 AWS_SESSION_TOKEN = os.environ.get('AWS_SESSION_TOKEN')
+NOTIFICATIONS_ENABLED = os.environ.get('NOTIFICATIONS_ENABLED')
 SSM_URL = 'http://localhost:2773/systemsmanager/parameters/get?withDecryption=true&name='
 API_URL = 'https://api.pushover.net/1/messages.json'
 HEADERS = {

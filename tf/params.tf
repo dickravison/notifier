@@ -1,17 +1,9 @@
-#Replace the values in the console to keep them out of state + version control
-resource "aws_ssm_parameter" "user" {
-  name  = "/notifier/user"
-  type  = "String"
-  value = "PLACEHOLDER"
+#Replace the values in the console to keep them out of state + IaC
+resource "aws_ssm_parameter" "pushover" {
+  for_each = var.pushover_parameters
 
-  lifecycle {
-    ignore_changes = [value]
-  }
-}
-
-resource "aws_ssm_parameter" "token" {
-  name  = "/notifier/token"
-  type  = "String"
+  name  = "/${var.project_name}/${each.key}"
+  type  = "SecureString"
   value = "PLACEHOLDER"
 
   lifecycle {
