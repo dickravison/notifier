@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "ssm" {
   statement {
     actions = ["ssm:GetParameter", "kms:Decrypt"]
     resources = [
-      "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter/notifier/*",
+      "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter/${var.project_name}/*",
       data.aws_kms_key.ssm.arn
     ]
   }
